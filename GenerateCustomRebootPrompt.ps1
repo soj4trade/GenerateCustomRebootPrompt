@@ -3,6 +3,9 @@ Add-Type -AssemblyName WindowsBase
 Add-Type -AssemblyName PresentationCore
 Add-Type -AssemblyName PresentationFramework
 $ErrorActionPreference = "Stop" # Allows us to exit the script with a failure receipt instead of "SUCCESS", even when the script didn't do anything
+$path = "$env:ProgramData\NinjaRMMAgent\scripting\custom"
+$outputfile = "$path\$output.txt"
+$finishedflag = "$path\finished.flag"
 
 # Generate timestamp (called when needed)
 Function Get-TimeStamp {
@@ -11,7 +14,7 @@ Function Get-TimeStamp {
 
 # Gently exit script when called
 Function ExitScript {
-    Write-Output "$(Get-TimeStamp) Exiting script..."
+    Write-Output "$(Get-TimeStamp) Exiting script..." | Out-File $outputfile -Append
         Exit
 }
 
@@ -496,8 +499,8 @@ Function New-WPFMessageBox {
 }
 
 # Build the custom, branded message box
-Function GenerateRestartWindow { 
-        Write-Output "$(Get-TimeStamp) Displaying reboot prompt to user; awaiting response..."
+Function GenerateRestartWindow {
+        Write-Output "$(Get-TimeStamp) Displaying reboot prompt to user; awaiting response..." | Out-File $outputfile -Append
         $logo = "$env:ProgramData\NinjaRMMAgent\scripting\custom\itwlogo.png" # <-- This file is injected as part of the onboarding/provisioning scripts
         $image = New-Object System.Windows.Controls.Image
         $image.Source = $logo
@@ -532,21 +535,21 @@ Function GenerateRestartWindow {
 
         # handle the user input
         If ($WPFMessageBoxOutput -eq "REBOOT RIGHT NOW") { # restart right now
-            Write-Output "$(Get-TimeStamp) User has chosen to reboot immediately!"
+            Write-Output "$(Get-TimeStamp) User has chosen to reboot immediately!" | Out-File $outputfile -Append
             RebootNow
               ExitScript
 
         } ElseIf ($WPFMessageBoxOutput -eq "REBOOT IN AN HOUR") { # restart in an hour
-            Write-Output "$(Get-TimeStamp) User has chosen to reboot in one hour."
+            Write-Output "$(Get-TimeStamp) User has chosen to reboot in one hour." | Out-File $outputfile -Append
             RebootInHour
               ExitScript
 
         } ElseIf ($WPFMessageBoxOutput -eq "DO NOT REBOOT") { # skip
-            Write-Output "$(Get-TimeStamp) User has rejected the reboot request."
+            Write-Output "$(Get-TimeStamp) User has rejected the reboot request." | Out-File $outputfile -Append
             NextBox
         
         } Else { # no selection chosen 
-            Write-Output "$(Get-TimeStamp) No selection was made."
+            Write-Output "$(Get-TimeStamp) No selection was made." | Out-File $outputfile -Append
             RebootNowNoAnswer
               ExitScript
 
@@ -587,19 +590,22 @@ Function NextBox {
 }
 
 Function RebootNow {
-  Write-Output "Rebooting..."
+  New-Item $finishedflag -ItemType File | Out-Null # Create the flag to signal to NinjaRMM that this script has finished
+  Write-Output "Rebooting..." | Out-File $outputfile -Append
   shutdown /r /t 10 /c "You have granted I.T.WORKS! permission to restart this computer. Thank you!"
 }
 
 Function RebootNowNoAnswer {
-  Write-Output "Rebooting..."
+  New-Item $finishedflag -ItemType File | Out-Null # Create the flag to signal to NinjaRMM that this script has finished
+  Write-Output "Rebooting..." | Out-File $outputfile -Append
   shutdown /r /t 10 /c "This computer will automatically restart in just a moment."
 }
 
 Function RebootInHour {
+  New-Item $finishedflag -ItemType File | Out-Null # Create the flag to signal to NinjaRMM that this script has finished
   shutdown /r /t 3600 /c "You have granted I.T.WORKS! permission to restart this computer. Thank you!"
-  Start-Sleep -Seconds 3550
-  Write-Output "Rebooting..."
+  Write-Output "This computer will reboot in one hour..." | Out-File $outputfile -Append
 }
 
+New-Item $outputfile -ItemType File | Out-Null # Create the output file
 GenerateRestartWindow
