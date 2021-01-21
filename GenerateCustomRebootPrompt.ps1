@@ -585,7 +585,6 @@ Function NextBox {
 
     # handle the user input
     If ($WPFMessageBoxOutput -eq "OK, GOT IT!") { # After they click OK
-        Write-Output "$(Get-TimeStamp) FYI MARK: $finishedflag" | Out-File $outputfile -Append
         New-Item $finishedflag -ItemType File | Out-Null # Create the flag to signal to NinjaRMM that this script has finished
     }
 }
