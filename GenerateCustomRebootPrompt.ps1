@@ -4,7 +4,7 @@ Add-Type -AssemblyName PresentationCore
 Add-Type -AssemblyName PresentationFramework
 $ErrorActionPreference = "Stop" # Allows us to exit the script with a failure receipt instead of "SUCCESS", even when the script didn't do anything
 $path = "$env:ProgramData\NinjaRMMAgent\scripting\custom"
-$outputfile = "$path\$output.txt"
+$outputfile = "$path\output.txt"
 $finishedflag = "$path\finished.flag"
 
 # Generate timestamp (called when needed)
