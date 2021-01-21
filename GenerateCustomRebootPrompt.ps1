@@ -591,20 +591,20 @@ Function NextBox {
 
 Function RebootNow {
   New-Item $finishedflag -ItemType File | Out-Null # Create the flag to signal to NinjaRMM that this script has finished
-  Write-Output "Rebooting..." | Out-File $outputfile -Append
+  Write-Output "$(Get-TimeStamp) Rebooting..." | Out-File $outputfile -Append
   shutdown /r /t 10 /c "You have granted I.T.WORKS! permission to restart this computer. Thank you!"
 }
 
 Function RebootNowNoAnswer {
   New-Item $finishedflag -ItemType File | Out-Null # Create the flag to signal to NinjaRMM that this script has finished
-  Write-Output "Rebooting..." | Out-File $outputfile -Append
+  Write-Output "$(Get-TimeStamp) Rebooting..." | Out-File $outputfile -Append
   shutdown /r /t 10 /c "This computer will automatically restart in just a moment."
 }
 
 Function RebootInHour {
   New-Item $finishedflag -ItemType File | Out-Null # Create the flag to signal to NinjaRMM that this script has finished
   shutdown /r /t 3600 /c "You have granted I.T.WORKS! permission to restart this computer. Thank you!"
-  Write-Output "This computer will reboot in one hour..." | Out-File $outputfile -Append
+  Write-Output "$(Get-TimeStamp) This computer will reboot in one hour..." | Out-File $outputfile -Append
 }
 
 New-Item $outputfile -ItemType File | Out-Null # Create the output file
