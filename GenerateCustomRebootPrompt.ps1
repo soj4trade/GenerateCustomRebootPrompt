@@ -585,6 +585,7 @@ Function NextBox {
 
     # handle the user input
     If ($WPFMessageBoxOutput -eq "OK, GOT IT!") { # After they click OK
+      New-Item $finishedflag -ItemType File | Out-Null # Create the flag to signal to NinjaRMM that this script has finished
         ExitScript
     }
 }
