@@ -6,6 +6,7 @@ $ErrorActionPreference = "Stop" # Allows us to exit the script with a failure re
 $path = "$env:ProgramData\NinjaRMMAgent\scripting\custom"
 $outputfile = "$path\output.txt"
 $finishedflag = "$path\finished.flag"
+Write-Output "$(Get-TimeStamp) FYI MARK: $finishedflag" | Out-File $outputfile -Append
 
 # Generate timestamp (called when needed)
 Function Get-TimeStamp {
@@ -586,7 +587,6 @@ Function NextBox {
     # handle the user input
     If ($WPFMessageBoxOutput -eq "OK, GOT IT!") { # After they click OK
       New-Item $finishedflag -ItemType File | Out-Null # Create the flag to signal to NinjaRMM that this script has finished
-        ExitScript
     }
 }
 
