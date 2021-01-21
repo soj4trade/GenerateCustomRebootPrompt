@@ -505,7 +505,7 @@ Function GenerateRestartWindow {
         $image.Width = 275.6
 
         $textblock = New-Object System.Windows.Controls.TextBlock
-        $textblock.Text = "Good morning!`n`nIt is our mission to ensure that your experience with technology is nothing short of exceptional. To meet that objective, we need to restart this device at your earliest convenience, so that it may finish installing updates, and to ensure that its overall uptime never exceeds one month.`n`nWe recognize that many of our clients work overnight, and that automatic restarts may be disruptive. From the options below, please select a restart time that best suits your schedule. Thank you!`n`nWe hope that you have a truly OUTSTANDING DAY!!`n`n— I.T.WORKS!"
+        $textblock.Text = "Good morning!`n`nIt is our mission to ensure that your experience with technology is nothing short of exceptional. To meet that objective, we need to restart this device at your earliest convenience, so that it may finish installing updates, and to ensure that its overall uptime never exceeds one month.`n`nWe recognize that many of our clients work overnight, and that automatic restarts may be disruptive. From the options below, please select a restart time that best suits your schedule. Thank you!`n`nWe hope that you have a truly OUTSTANDING DAY!!`n`n- I.T.WORKS!"
         $textblock.Padding = 10
         $textblock.FontFamily = "Verdana"
         $textblock.FontSize = 16
@@ -556,7 +556,7 @@ Function GenerateRestartWindow {
 # the box that appears if user says no to the update
 Function NextBox {
     $textblock2 = New-Object System.Windows.Controls.TextBlock
-    $textblock2.Text = "No worries, we understand! If you are still logged in at this time tomorrow, this prompt will appear again. Thank you!!`n`n—I.T.WORKS!"
+    $textblock2.Text = "No worries, we understand! If you are still logged in at this time tomorrow, this prompt will appear again. Thank you!!`n`n- I.T.WORKS!"
     $textblock2.Padding = 10
     $textblock2.FontFamily = "Verdana"
     $textblock2.FontSize = 16
