@@ -2,7 +2,6 @@
 Add-Type -AssemblyName WindowsBase
 Add-Type -AssemblyName PresentationCore
 Add-Type -AssemblyName PresentationFramework
-$ErrorActionPreference = "Stop" # Allows us to exit the script with a failure receipt instead of "SUCCESS", even when the script didn't do anything
 $path = "$env:ProgramData\NinjaRMMAgent\scripting\custom"
 $outputfile = "$path\output.txt"
 $finishedflag = "$path\finished.flag"
@@ -10,12 +9,6 @@ $finishedflag = "$path\finished.flag"
 # Generate timestamp (called when needed)
 Function Get-TimeStamp {
     Return "[{0:MM/dd/yy} {0:HH:mm:ss}]" -f (Get-Date)
-}
-
-# Gently exit script when called
-Function ExitScript {
-    Write-Output "$(Get-TimeStamp) Exiting script..." | Out-File $outputfile -Append
-        Exit
 }
 
 # Custom dialog box framework
@@ -537,13 +530,11 @@ Function GenerateRestartWindow {
         If ($WPFMessageBoxOutput -eq "REBOOT RIGHT NOW") { # restart right now
             Write-Output "$(Get-TimeStamp) User has chosen to reboot immediately!" | Out-File $outputfile -Append
             RebootNow
-              ExitScript
-
+              
         } ElseIf ($WPFMessageBoxOutput -eq "REBOOT IN AN HOUR") { # restart in an hour
             Write-Output "$(Get-TimeStamp) User has chosen to reboot in one hour." | Out-File $outputfile -Append
             RebootInHour
-              ExitScript
-
+              
         } ElseIf ($WPFMessageBoxOutput -eq "DO NOT REBOOT") { # skip
             Write-Output "$(Get-TimeStamp) User has rejected the reboot request." | Out-File $outputfile -Append
             NextBox
@@ -551,8 +542,7 @@ Function GenerateRestartWindow {
         } Else { # no selection chosen 
             Write-Output "$(Get-TimeStamp) No selection was made." | Out-File $outputfile -Append
             RebootNowNoAnswer
-              ExitScript
-
+              
         }
 }
 
