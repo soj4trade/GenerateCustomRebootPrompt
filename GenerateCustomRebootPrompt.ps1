@@ -522,7 +522,7 @@ Function GenerateRestartWindow {
             TitleTextForeground = "White"
             ButtonType = "None"
             CustomButtons = "REBOOT RIGHT NOW", "REBOOT IN AN HOUR", "DO NOT REBOOT"
-            Timeout = 30 # time out after an hour
+            Timeout = 3600 # time out after an hour
         }
         New-WPFMessageBox @params
 
@@ -588,13 +588,13 @@ Function RebootNow {
 Function RebootNowNoAnswer {
   New-Item $finishedflag -ItemType File | Out-Null # Create the flag to signal to NinjaRMM that this script has finished
   Write-Output "$(Get-TimeStamp) Rebooting..." | Out-File $outputfile -Append
-  shutdown /r /t 10 /c "This computer will automatically restart in just a moment."
+  shutdown /r /t 10 /c "No response was received. This computer will now restart."
 }
 
 Function RebootInHour {
   New-Item $finishedflag -ItemType File | Out-Null # Create the flag to signal to NinjaRMM that this script has finished
   shutdown /r /t 3600 /c "You have granted I.T.WORKS! permission to restart this computer. Thank you!"
-  Write-Output "$(Get-TimeStamp) This computer will reboot in one hour..." | Out-File $outputfile -Append
+  Write-Output "$(Get-TimeStamp) This computer will reboot in one hour." | Out-File $outputfile -Append
 }
 
 New-Item $outputfile -ItemType File | Out-Null # Create the output file
