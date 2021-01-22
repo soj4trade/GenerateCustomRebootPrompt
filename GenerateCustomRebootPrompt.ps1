@@ -593,7 +593,7 @@ Function RebootNowNoAnswer {
 
 Function RebootInHour {
   New-Item $finishedflag -ItemType File | Out-Null # Create the flag to signal to NinjaRMM that this script has finished
-  shutdown /r /t 3600 /c "You have granted I.T.WORKS! permission to restart this computer. Thank you!"
+  shutdown /r /t 36 /c "You have granted I.T.WORKS! permission to restart this computer. Thank you!"
   Write-Output "$(Get-TimeStamp) This computer will reboot in one hour." | Out-File $outputfile -Append
 }
 
