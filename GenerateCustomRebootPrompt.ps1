@@ -549,7 +549,7 @@ Function GenerateRestartWindow {
 # the box that appears if user says no to the update
 Function NextBox {
     $textblock2 = New-Object System.Windows.Controls.TextBlock
-    $textblock2.Text = "No worries, we understand! If you are still logged in at this time tomorrow, this prompt will appear again. Thank you!!`n`n- I.T.WORKS!"
+    $textblock2.Text = "No worries! We understand. If you are still logged in at this time tomorrow, this prompt will appear again. Thank you!!`n`n- I.T.WORKS!"
     $textblock2.Padding = 10
     $textblock2.FontFamily = "Verdana"
     $textblock2.FontSize = 16
