@@ -1,18 +1,21 @@
 # Required assemblies for WPF message box
+# Assemblies required for custom WPF message box UI
 Add-Type -AssemblyName WindowsBase
 Add-Type -AssemblyName PresentationCore
 Add-Type -AssemblyName PresentationFramework
-$path = "$env:ProgramData\NinjaRMMAgent\scripting\custom"
-$outputfile = "$path\output.txt"
-$finishedflag = "$path\finished.flag"
+
+# Declare variables
+$workingdir = "$env:ProgramData\NinjaRMMAgent\scripting\custom\reboot"
+$outputfile = "$workingdir\output.log" # Create a log that may be inspected post runtime
+$finishedflag = "$workingdir\finished.flag" # An indicator that the script has finished (NinjaRMM is waiting for this).
 
 # Generate timestamp (called when needed)
-Function Get-TimeStamp {
-    Return "[{0:MM/dd/yy} {0:HH:mm:ss}]" -f (Get-Date)
+function Get-TimeStamp {
+  return "[{0:MM/dd/yy} {0:HH:mm:ss}]" -f (Get-Date)
 }
 
 # Custom dialog box framework
-Function New-WPFMessageBox {
+function New-WPFMessageBox {
 
     # https://smsagent.wordpress.com/2017/08/24/a-customisable-wpf-messagebox-for-powershell/
     
@@ -492,7 +495,7 @@ Function New-WPFMessageBox {
 }
 
 # Build the custom, branded message box
-Function GenerateRestartWindow {
+function GenerateRestartWindow {
         Write-Output "$(Get-TimeStamp) Displaying reboot prompt to user; awaiting response..." | Out-File $outputfile -Append
         $logo = "$env:ProgramData\NinjaRMMAgent\scripting\custom\itwlogo.png" # <-- This file is injected as part of the onboarding/provisioning scripts
         $image = New-Object System.Windows.Controls.Image
@@ -522,7 +525,7 @@ Function GenerateRestartWindow {
             TitleTextForeground = "White"
             ButtonType = "None"
             CustomButtons = "REBOOT RIGHT NOW", "REBOOT IN AN HOUR", "DO NOT REBOOT"
-            Timeout = 3600 # time out after an hour
+            Timeout = 30 # time out after an hour
         }
         New-WPFMessageBox @params
 
@@ -593,7 +596,7 @@ Function RebootNowNoAnswer {
 
 Function RebootInHour {
   Write-Output "$(Get-TimeStamp) This computer will reboot in one hour." | Out-File $outputfile -Append
-  Start-Sleep -Seconds 3600
+  Start-Sleep -Seconds 30
   Write-Output "$(Get-TimeStamp) Rebooting..." | Out-File $outputfile -Append
   New-Item $finishedflag -ItemType File | Out-Null # Create the flag to signal to NinjaRMM that this script has finished
   shutdown /r /t 10 /c "You have granted I.T.WORKS! permission to restart this computer. Thank you!"
