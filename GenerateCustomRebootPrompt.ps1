@@ -543,7 +543,7 @@ function GenerateRestartWindow {
             NextBox
         
         } Else { # no selection chosen 
-            Write-Output "$(Get-TimeStamp) No selection was made." | Out-File $outputfile -Append
+            Write-Output "$(Get-TimeStamp) Timeout; no selection was made in the allotted time." | Out-File $outputfile -Append
             RebootNowNoAnswer
               
         }
