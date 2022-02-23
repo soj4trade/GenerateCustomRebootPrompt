@@ -504,7 +504,7 @@ function GenerateRestartWindow {
         $image.Width = 275.6
 
         $textblock = New-Object System.Windows.Controls.TextBlock
-        $textblock.Text = "Good morning!`n`nIt is our mission to provide you with an exceptional experience when using technology. To meet that objective, we need to restart this device at your earliest convenience; either it must restart to finish installing updates, or its 31-day uptime limit has been reached.`n`nWe recognize that many of our clients work overnight, and that automatic restarts may be disruptive. From the options below, please select a restart time that best suits your schedule. Thank you!`n`nWe hope that you have a truly OUTSTANDING day!!`n`n- I.T.WORKS!"
+        $textblock.Text = "Good morning!`n`nIt is our mission to provide our clients with exceptional technology. To meet that objective, we need to restart this device at your earliest convenience; either it must restart to finish installing updates, or its 31-day uptime limit has been reached.`n`nWe recognize that many of our clients work overnight, and that automatic restarts may be disruptive. From the options below, please select a restart time that best suits your schedule. Thank you!`n`nWe hope that you have a truly OUTSTANDING day!!`n`n- I.T.WORKS!"
         $textblock.Padding = 10
         $textblock.FontFamily = "Verdana"
         $textblock.FontSize = 16
